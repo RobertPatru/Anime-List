@@ -1,45 +1,60 @@
-<html>
-    <head>
- 
-    </head>
-    <body>
-        content goes here
-        <br/>
-        <br/>
-        Missing or insufficient permissions ---> >>><a href="https://stackoverflow.com/a/46925637">click herre</a>
-        
-        <!-- <script type="module">
-            // import all firebase specific stuff here
-            import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js'
-            // import all firestore specific stuff here
-            import { getFirestore, getDocs, collection, query, where } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js'
+<!DOCTYPE html>
+<html lang="en">
 
-            const firebaseConfig = {
-                apiKey: "AIzaSyDkpMv8qx2ytXBeyOkWHahWTmpa7aaqXME",
-                authDomain: "firestore-api-application.firebaseapp.com",
-                projectId: "firestore-api-application",
-                storageBucket: "firestore-api-application.appspot.com",
-                messagingSenderId: "321604200648",
-                appId: "1:321604200648:web:d90007a4a067cdff6d9dfd",
-                measurementId: "G-1XHRZ775ZL"
-            };
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime List</title>
 
-            const app = initializeApp(firebaseConfig);
-            const db = getFirestore(app);
-            const animeRef = collection(db, "anime");
+    <script src="https://kit.fontawesome.com/7539d0c410.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
 
-            const q = query(animeRef);
-            
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                //doc.data() is the object stored in the document
-                //doc.id is the id of the document
-                // console.log(doc.id, " => ", doc.data());
-            });
+<body>
+    <div class="display-flex flex-column align-items-center">
+        <header>
+            <nav class="display-flex align-items-center justify-content-space-between">
+                <a href="#" class="logo">
+                    <img src="/img/Netflix-Brand-Logo.png" alt="logo" class="logo">
+                </a>
+                <a href="#" class="add-anime">
+                    Add Anime
+                    <i class="fa-solid fa-plus fas"></i>
+                </a>
+            </nav>
+        </header>
+    
+        <div class="main-container">
+            <main>
+                <ul class="unordered-list-inside-nav">
+                    <li class="list-item-inside-nav">
+                        <select name="genra" class="genre-dropdown-menu">
+                            <option value="Action">Action</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Psychological">Psychological</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Shounen">Shounen</option>
+                        </select>
+                    </li>
+                </ul>
 
-            export { db, animeRef, querySnapshot };
-        </script> -->
+                <div class="anime-list">
+                    <div class="box">
+                        <img src="/img/6163d0d700a00.jpg" alt="" class="anime-img">
+                    </div>
+                    <div class="box">
+                        <img src="/img/6319352.webp" alt="" class="anime-img">
+                    </div>
+                </div>
+                
 
-        <script type="module" src="/app.js"></script>
-    </body>
+            </main>
+        </div>
+    </div>
+    
+    
+
+</body>
+
 </html>
