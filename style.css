@@ -1,6 +1,6 @@
 :root {
-    --black-body-background-color: #141414;
-    --white-text-color: #fff;
+    --background-color: #141414e3;
+    --text-color: #fff;
 }
 
 *, ::before, *::after {
@@ -38,11 +38,13 @@ body {
     height: 100vh;
     width: 100vw;
 
+    font-family: 'Roboto', sans-serif;
+
     display: flex;
     justify-content: center;
-    overflow: none;
+    overflow-x: none;
 
-    background-color: var(--black-body-background-color);
+    background-color: var(--background-color);
 }
 
 li {
@@ -57,7 +59,6 @@ a {
 .main-container {
     height: 100%;
     width: 90%;
-    background-color: rebeccapurple;
 }
 
 
@@ -69,9 +70,11 @@ header {
 
 nav {
     background-color: black;
+    padding: 0 20px;
 }
 .genre-dropdown-menu {
     width: 100px;
+    margin: 10px 5px;
 }
 
 .logo {
@@ -86,10 +89,38 @@ nav {
 }
 
 /* --------------------------- CONTENT SECTION */
+.anime-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
 .box {
-    width: 50%;
+    width: 46%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    margin: 5px;
+    border: 5px;
+}
+
+.box:hover {
+    cursor: pointer;
+    position: relative;
+    z-index: 10000;
+    background-color: rebeccapurple;
+    transform: scale(1.1);
 }
 
 .anime-img {
     width: 100%;
+}
+
+.title-and-chevron-container {
+    font-weight: 300;
+    color: var(--text-color);
+}
+
+.anime-title {
+    margin-right: 5px;
 }
