@@ -107,7 +107,7 @@ nav {
 .box:hover {
     cursor: pointer;
     position: relative;
-    z-index: 10000;
+    z-index: 1;
     background-color: rebeccapurple;
     transform: scale(1.1);
 }
