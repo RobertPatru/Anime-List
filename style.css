@@ -124,3 +124,44 @@ nav {
 .anime-title {
     margin-right: 5px;
 }
+
+/* ----------------------------------- Aniem details    */
+.anime-card-info {
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    background-color: #333;
+    color: var(--text-color);
+
+    padding: 10px 20px;
+
+    position: fixed;
+    top: 0%;
+    left: 0%;
+}
+.anime-card-info img {
+    width: 100%;
+}
+
+.anime-card-info p {
+    margin-top: 20px;
+}
+
+
+
+
+/* ----------------------------------- Add anime list */
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.anime-description {
+    height: 200px;
+}
