@@ -2,7 +2,7 @@
 // import { response } from 'express';
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
 // import all firestore specific stuff here
-import { getFirestore, getDocs, addDoc, collection, query, where, doc, setDoc, deleteDoc, onSnapshot, query} from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
+import { getFirestore, getDocs, addDoc, collection, where, doc, setDoc, deleteDoc, onSnapshot, query} from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
 //  import { doc, setDoc } from "firebase/firestore"; 
 
 const firebaseConfig = {
@@ -19,33 +19,62 @@ initializeApp(firebaseConfig);
 const db = getFirestore();
 const collectionReference = collection(db, 'anime');
 
-// getDocs(collectionReference)
-//     .then(response => {
-//         let anime = [{}];
 
-//         response.docs.map(element => {
-//             anime.push({ ...element.data(), id: doc.id })
-//         });
-
-//         console.log(anime)
-//     })
-//     .catch((err) => {
-//         console.log(err);
-//     });
-
-
-onSnapshot(collectionReference, (snapshot) => {
+function getDataFromFireStore() {
+    let id = 1;
     let anime = [{}];
 
-    snapshot.docs.map(element => {
-        // anime.push({ ...element.data(), id: doc.id })
+    onSnapshot(collectionReference, (snapshot) => {
+        snapshot.docs.map(element => {   
+            anime.push({ ...element.data(), id: id++})
+            displayAnime(anime);
+            // console.log(anime)
+        });
 
-        anime.push({ ...element.data(), id: element.id})
     });
+    // console.log(anime)
+}
 
-    console.log(anime)
+function displayAnime(animeList) {
+
+    // animeList.forEach( (element) => {
+    //     const animeContainer = document.createElement('div');
+    //     animeContainer.classList.add('box', 'display-flex' ,'flex-column' ,'align-items-center');
+
+    //     animeContainer.innerHTML = `
+    //         <img src="/img/6163d0d700a00.jpg" alt="" class="anime-img">
+    //         <div class="title-and-chevron-container display-flex align-items-center">
+    //             <p class="anime-title">${element.name}</p>
+    //             <i class="fa-solid fa-chevron-down fas"></i>
+    //         </div>   
+    //     `;
+
+    //     console.log(animeContainer);
+    // } );
+    
+
+    for (let i = 1; i < animeList.length; i++) {
+        console.log(i);
+        const animeContainer = document.createElement('div');
+        animeContainer.classList.add('box', 'display-flex' ,'flex-column' ,'align-items-center');
+        animeContainer.innerHTML = `
+            <img src="/img/6163d0d700a00.jpg" alt="" class="anime-img">
+            <div class="title-and-chevron-container display-flex align-items-center">
+                <p class="anime-title">${animeList[i].name}</p>
+                <i class="fa-solid fa-chevron-down fas"></i>
+            </div>   
+        `;
+
+        console.log(animeContainer);
+    }
+}
+
+// get data from firestore activates every time the DOM fnishes loading with all the dependencies
+window.addEventListener('load', () => {
+    getDataFromFireStore();
 });
 
+// ---------------------------------------        ---------------------------------------       ---------------------------------------
 
 function addElements() {
     // add elements into database
