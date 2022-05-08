@@ -27,46 +27,54 @@ function getDataFromFireStore() {
     onSnapshot(collectionReference, (snapshot) => {
         snapshot.docs.map(element => {   
             anime.push({ ...element.data(), id: id++})
-            displayAnime(anime);
+            
             // console.log(anime)
         });
 
     });
-    // console.log(anime)
+
+    displayAnime(anime);
+    console.log(anime);
+    console.log(anime.length);
+
 }
 
-function displayAnime(animeList) {
+async function displayAnime(animeList) {
+    await animeList;
+   
+    // console.log(animeList.length)
 
-    // animeList.forEach( (element) => {
+    animeList.forEach( (element, index) => {
+        const animeContainer = document.createElement('div');
+        animeContainer.classList.add('box', 'display-flex' ,'flex-column' ,'align-items-center');
+
+        animeContainer.innerHTML = `
+            <img src="/img/6163d0d700a00.jpg" alt="" class="anime-img">
+            <div class="title-and-chevron-container display-flex align-items-center">
+                <p class="anime-title">${element.name}</p>
+                <i class="fa-solid fa-chevron-down fas"></i>
+            </div>   
+        `;
+
+        // console.log(animeContainer);
+
+ 
+    } );
+    
+    // for (let i = 0; i < Object.keys(animeList).length; i++) {
+    //     console.log(i);
     //     const animeContainer = document.createElement('div');
     //     animeContainer.classList.add('box', 'display-flex' ,'flex-column' ,'align-items-center');
-
     //     animeContainer.innerHTML = `
     //         <img src="/img/6163d0d700a00.jpg" alt="" class="anime-img">
     //         <div class="title-and-chevron-container display-flex align-items-center">
-    //             <p class="anime-title">${element.name}</p>
+    //             <p class="anime-title">${animeList[i].name}</p>
     //             <i class="fa-solid fa-chevron-down fas"></i>
     //         </div>   
     //     `;
 
     //     console.log(animeContainer);
-    // } );
-    
-
-    for (let i = 1; i < animeList.length; i++) {
-        console.log(i);
-        const animeContainer = document.createElement('div');
-        animeContainer.classList.add('box', 'display-flex' ,'flex-column' ,'align-items-center');
-        animeContainer.innerHTML = `
-            <img src="/img/6163d0d700a00.jpg" alt="" class="anime-img">
-            <div class="title-and-chevron-container display-flex align-items-center">
-                <p class="anime-title">${animeList[i].name}</p>
-                <i class="fa-solid fa-chevron-down fas"></i>
-            </div>   
-        `;
-
-        console.log(animeContainer);
-    }
+    // }
 }
 
 // get data from firestore activates every time the DOM fnishes loading with all the dependencies
