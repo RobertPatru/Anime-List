@@ -30,13 +30,11 @@ function getDataFromFireStore() {
             
             // console.log(anime)
         });
+        displayAnime(anime);
+        console.log(anime);
+        console.log(anime.length);
 
     });
-
-    displayAnime(anime);
-    console.log(anime);
-    console.log(anime.length);
-
 }
 
 async function displayAnime(animeList) {
