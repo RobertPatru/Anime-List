@@ -19,10 +19,16 @@ initializeApp(firebaseConfig);
 const db = getFirestore();
 const collectionReference = collection(db, 'anime');
 
+let anime = [{}];
+
+
+// ---------------------------------------        Get and Display data from Firestore       ---------------------------------------
+
+
+
 
 function getDataFromFireStore() {
     let id = 1;
-    let anime = [{}];
 
     onSnapshot(collectionReference, (snapshot) => {
         snapshot.docs.map(element => {   
@@ -63,8 +69,8 @@ async function displayAnime(animeList) {
         animeContainer.innerHTML = `
             <img src="${animeList[i].image}" alt="" class="anime-img">
             <div class="title-and-chevron-container display-flex align-items-center">
-                <p class="anime-title">${animeList[i].name}</p>
-                <i class="fa-solid fa-chevron-down fas"></i>
+                <p class="anime-title show-info">${animeList[i].name}</p>
+            
             </div>   
         `;
 
@@ -77,7 +83,13 @@ window.addEventListener('load', () => {
     getDataFromFireStore();
 });
 
+
+
+
 // ---------------------------------------        ---------------------------------------       ---------------------------------------
+
+
+
 
 function addElements() {
     // add elements into database
@@ -100,3 +112,46 @@ function search() {
     // how to search through firestore
     const q = query(collectionReference, where('coloana in care sa caute', '==', 'chestie pe care s-o caute'));
 }
+
+
+
+
+// ---------------------------------------        Open the details page when an anime is clicked       ---------------------------------------
+function openDetails(name) {
+    for (let i = 1; i < anime.length; i++) {
+        if(anime[i].name == name) {
+            const detailsContainer = document.createElement('div');
+            detailsContainer.classList.add('anime-card-info');
+
+            detailsContainer.innerHTML = `
+                <img src="${anime[i].image}">
+                <h5 class="increase-font margin-Y-10">Name: ${anime[i].name}</h5 class="increase-font">
+                <h5 class="increase-font margin-Y-10">Genre: ${anime[i].genre}</h5>
+                <h5 class="increase-font margin-Y-10">Episodes: ${anime[i].episodes}</h5>
+                <p class="increase-font margin-Y-10">
+                    ${anime[i].description}
+                </p>
+                <span class="close">X</span>
+            `;
+
+            document.querySelector('main').append(detailsContainer);
+        }
+    }
+}
+
+document.body.addEventListener('click', event => {
+    if (event.target.classList.contains('show-info')) {
+        console.log(event.target.textContent);
+        openDetails(event.target.textContent);
+    }
+});
+
+
+
+
+// ---------------------------------------        Close the details page when "X" is clicked       ---------------------------------------
+document.body.addEventListener('click', event => {
+    if (event.target.classList.contains('close')) {
+        document.querySelector('.anime-card-info').remove();
+    }
+});
