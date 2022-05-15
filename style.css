@@ -205,11 +205,11 @@ label {
     color: var(--text-color);
 }
 
-.anime-description {
+.anime-description-input {
     height: 200px;
 }
 
 .submit-btn {
-    margin-top: 5px;
+    margin-top: 15px;
     font-weight: bold;
 }

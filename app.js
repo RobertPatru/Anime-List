@@ -22,10 +22,9 @@ const collectionReference = collection(db, 'anime');
 let anime = [{}];
 
 
+
+
 // ---------------------------------------        Get and Display data from Firestore       ---------------------------------------
-
-
-
 
 function getDataFromFireStore() {
     let id = 1;
@@ -63,7 +62,6 @@ async function displayAnime(animeList) {
     // } );
     
     for (let i = 1; i < animeList.length; i++) {
-        console.log(i);
         const animeContainer = document.createElement('div');
         animeContainer.classList.add('box', 'display-flex' ,'flex-column' ,'align-items-center', 'padding-20');
         animeContainer.innerHTML = `
@@ -85,21 +83,7 @@ window.addEventListener('load', () => {
 
 
 
-
 // ---------------------------------------        ---------------------------------------       ---------------------------------------
-
-
-
-
-function addElements() {
-    // add elements into database
-    addDoc(collectionReference, {
-        name: "Zankyou no terror",
-        impression: 'A fost bun, tata'
-    })
-        .then( () => {console.log('Element added')} );
-}
-
 
 function deleteElement() {
     const docRef = doc(db, 'anime', "The lements ID inside the collection");
