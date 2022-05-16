@@ -22,21 +22,22 @@ const collectionReference = collection(db, 'anime');
 // ---------------------------------------        Add data to Firestore       ---------------------------------------
 
 document.querySelector('.form-to-add-anime').addEventListener('submit', e => {
-    const name = document.querySelector('.anime-name-input').value;
-    const genre = document.querySelector('.anime-genre-input').value;
-    const episodes = document.querySelector('.anime-episodes-input').value;
-    const imgURL = document.querySelector('.upload-anime-image-input').value;
-    const description = document.querySelector('.anime-description-input').value;
+    let name = document.querySelector('.anime-name-input').value;
+    let genre = document.querySelector('.anime-genre-input').value;
+    let episodes = document.querySelector('.anime-episodes-input').value;
+    let imgURL = document.querySelector('.upload-anime-image-input').value;
+    let description = document.querySelector('.anime-description-input').value;
     
+    if (name != '' && genre != '' && episodes != '' && imgURL != '' && description) {
+        addElements(name, genre, episodes, imgURL, description);
+    }
 
-    addElements(name, genre, episodes, imgURL, description);
 
-
-    name = '';
-    genre = '';
-    episodes = '';
-    imgURL = '';
-    description = '';
+    document.querySelector('.anime-name-input').value = '';
+    document.querySelector('.anime-genre-input').value = '';
+    document.querySelector('.anime-episodes-input').value = '';
+    document.querySelector('.upload-anime-image-input').value = '';
+    document.querySelector('.anime-description-input').value = '';
 
     e.preventDefault();
 });
@@ -53,6 +54,4 @@ function addElements(name, genre, episodes, imgURL, description) {
         .then( () => {console.log('Element added')} );
 }
 
-// ---------------------------------------        ---------------------------------------       ---------------------------------------
-
-console.log('MEGE?');
+// // ---------------------------------------        ---------------------------------------       ---------------------------------------

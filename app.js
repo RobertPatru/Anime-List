@@ -71,7 +71,7 @@ async function displayAnime(animeList) {
             
             </div>   
         `;
-
+        console.log(animeList[i].image);
         document.querySelector('.anime-list').append(animeContainer);
     }
 }
