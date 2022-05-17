@@ -43,6 +43,7 @@ document.querySelector('.form-to-add-anime').addEventListener('submit', e => {
 });
 
 function addElements(name, genre, episodes, imgURL, description) {
+    console.log(imgURL);
     // add elements into database
     addDoc(collectionReference, {
         name: name,
