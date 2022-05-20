@@ -49,7 +49,7 @@ function addElements(name, genre, episodes, imgURL, description) {
         name: name,
         genre: genre,
         episodes: episodes,
-        imgage: imgURL,
+        image: imgURL,
         description: description
     })
         .then( () => {console.log('Element added')} );

@@ -65,7 +65,7 @@ async function displayAnime(animeList) {
         const animeContainer = document.createElement('div');
         animeContainer.classList.add('box', 'display-flex' ,'flex-column' ,'align-items-center', 'padding-20');
         animeContainer.innerHTML = `
-            <img src="${animeList[i].image}" alt="" class="anime-img">
+            <img src="${animeList[i].image}" alt="anime picture" class="anime-img">
             <div class="title-and-chevron-container display-flex align-items-center">
                 <p class="anime-title show-info">${animeList[i].name}</p>
             
@@ -108,7 +108,7 @@ function openDetails(name) {
             detailsContainer.classList.add('anime-card-info');
 
             detailsContainer.innerHTML = `
-                <img src="${anime[i].image}">
+                <img src="${anime[i].image}" alt="big anime img" class="big-anime-img">
                 <h5 class="increase-font margin-Y-10">Name: ${anime[i].name}</h5 class="increase-font">
                 <h5 class="increase-font margin-Y-10">Genre: ${anime[i].genre}</h5>
                 <h5 class="increase-font margin-Y-10">Episodes: ${anime[i].episodes}</h5>
