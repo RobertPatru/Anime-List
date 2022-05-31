@@ -214,3 +214,8 @@ label {
     margin-top: 15px;
     font-weight: bold;
 }
+
+.delete-anime { 
+    font-weight: 600;
+    font-size: 20px;
+}
