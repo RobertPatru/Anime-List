@@ -125,12 +125,17 @@ document.body.addEventListener('click', event => {
 
 
 // ---------------------------------------        Search for anime      ---------------------------------------
-function search() {
+function search(whatToSearchFor) {
     // how to search through firestore
-    const q = query(collectionReference, where('coloana in care sa caute', '==', 'chestie pe care s-o caute'));
+    // const q = query(collectionReference, where('name', '==', whatToSearchFor));
+
+    console.log(anime.includes(toString(whatToSearchFor)));
 }
 
-
+document.querySelector('.search-for-anime').addEventListener('keyup', (event) => {
+    const whatToSearchFor = event.target.value;
+    search(whatToSearchFor);
+});
 
 
 // ---------------------------------------        Open the details page when an anime is clicked       ---------------------------------------
