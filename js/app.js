@@ -86,10 +86,9 @@ window.addEventListener('load', () => {
 
 
 // ---------------------------------------        Delete anime from Frontend       ---------------------------------------
-function deleteAnime(animeID) {
+async function deleteAnime(animeID) {
       // delete the anime from Firestore
       deleteElementFromFirestore(animeID);
-    //   console.log(animeID);
 
       // close the anime information 
       document.querySelector('.anime-card-info').remove();
@@ -100,13 +99,16 @@ function deleteAnime(animeID) {
 
 // ---------------------------------------        Delete anime from Firestore       ---------------------------------------
 async function deleteElementFromFirestore(animeID) {
-    const docRef = doc(db, 'anime', animeID);
-
-    await deleteDoc(docRef)
-        .then( () => console.log(animeID) );
-
     
-    // await db.collection("anime").doc(animeID).delete()
+    await deleteDoc(doc(db, "anime", animeID))
+    .then( () => console.log(animeID))
+    .catch( error => console.log(error));
+  
+
+
+
+    // await deleteDoc(docRef)
+    //     .then( () => console.log(typeof(animeID)) );
 }
 
 document.body.addEventListener('click', event => {
@@ -114,6 +116,7 @@ document.body.addEventListener('click', event => {
        // select the anime's ID (the id is redered in the DOM, but with display none)
        const animeID= event.target.nextSibling.nextSibling.nextSibling.nextSibling.textContent;
 
+       console.log(animeID);
        deleteAnime(animeID);
     }
 });
