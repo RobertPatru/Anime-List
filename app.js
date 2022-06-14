@@ -116,7 +116,7 @@ function searchAnimeGenre() {
     if (genreInput.value == 'All') {
         removeAllAnimeFromFrontend();
         displayAnime(anime);
-        return;
+        return; // if the filter is set on "All" don't execute the code after this line
     }
     
     // "displayAnime function starts from i = 1. That's why matchingAnime[0] equals '' ";
@@ -130,15 +130,7 @@ function searchAnimeGenre() {
         }
     }
 
-    removeAllAnimeFromFrontend();
-
-    if(matchingAnime == '') {
-        document.querySelector('.anime-list').innerHTML =  `
-            <h1 class='no-anime-found'>No anime found.</h1>
-        `;
-    }
-
-    displayAnime(matchingAnime);
+    updateList(matchingAnime)
 }
 
 // ---------------------------------------        Display the anime that match the name       ---------------------------------------
@@ -157,19 +149,12 @@ function searchAnimeName() {
        }
     }
 
-    removeAllAnimeFromFrontend();
-
-    if(matchingAnime == '') {
-        document.querySelector('.anime-list').innerHTML =  `
-            <h1 class='no-anime-found'>No anime found.</h1>
-        `;
-    }
-
-    displayAnime(matchingAnime);
+    updateList(matchingAnime);
 }
 
 searchForAnimeNameInput.addEventListener('keyup', searchAnimeName);
 
+// ---------------------------------------        Update the anime list based on the needs       ---------------------------------------
 function updateList(animeArray) {
     removeAllAnimeFromFrontend();
 
