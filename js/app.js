@@ -19,20 +19,16 @@ initializeApp(firebaseConfig);
 const db = getFirestore();
 const collectionReference = collection(db, 'anime');
 
-let anime = [{}];
+let anime = [];
 
 
 
 
 // ---------------------------------------        GET DATA FROM FIRESTORE       ---------------------------------------
 function getDataFromFireStore() {
-    // let id = 1;
-
     onSnapshot(collectionReference, (snapshot) => {
         snapshot.docs.map(element => {   
             anime.push({ ...element.data(), id: element.id})
-            
-            // console.log(element.id)
         });
         displayAnime(anime);
     });
@@ -40,7 +36,6 @@ function getDataFromFireStore() {
 
 // ---------------------------------------        DISPLAY DATA FROM FIRESTORE IN FRONTEND      ---------------------------------------
 async function displayAnime(animeList) {
-    await animeList;
     
     for (let i = 1; i < animeList.length; i++) {
         const animeContainer = document.createElement('div');
@@ -83,9 +78,11 @@ async function deleteAnime(animeID) {
 // ---------------------------------------        Delete anime from Firestore       ---------------------------------------
 async function deleteElementFromFirestore(animeID) {
     animeID = animeID.toString();
-    await deleteDoc(doc(db, "anime", animeID))
-    .then( () => console.log(animeID))
-    .catch( error => console.log(error));
+    let a = await doc(db, "anime", animeID);
+    console.log(a);
+    let result = await deleteDoc(doc(db, "anime", animeID));
+
+    console.log(result);
   
 
 
