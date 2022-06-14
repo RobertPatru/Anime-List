@@ -3,7 +3,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
 // import all firestore specific stuff here
 import { getFirestore, getDocs, addDoc, collection, where, doc, setDoc, deleteDoc, onSnapshot, query} from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
-//  import { doc, setDoc } from "firebase/firestore"; 
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyDkpMv8qx2ytXBeyOkWHahWTmpa7aaqXME",
@@ -41,25 +41,6 @@ function getDataFromFireStore() {
 // ---------------------------------------        DISPLAY DATA FROM FIRESTORE IN FRONTEND      ---------------------------------------
 async function displayAnime(animeList) {
     await animeList;
-   
-    // console.log(animeList.length)
-
-    // animeList.forEach( (element, index) => {
-    //     const animeContainer = document.createElement('div');
-    //     animeContainer.classList.add('box', 'display-flex' ,'flex-column' ,'align-items-center');
-
-    //     animeContainer.innerHTML = `
-    //         <img src="/img/6163d0d700a00.jpg" alt="" class="anime-img">
-    //         <div class="title-and-chevron-container display-flex align-items-center">
-    //             <p class="anime-title">${element.name}</p>
-    //             <i class="fa-solid fa-chevron-down fas"></i>
-    //         </div>   
-    //     `;
-
-    //     // console.log(animeContainer);
-
- 
-    // } );
     
     for (let i = 1; i < animeList.length; i++) {
         const animeContainer = document.createElement('div');
@@ -99,7 +80,7 @@ async function deleteAnime(animeID) {
 
 // ---------------------------------------        Delete anime from Firestore       ---------------------------------------
 async function deleteElementFromFirestore(animeID) {
-    
+    animeID = animeID.toString();
     await deleteDoc(doc(db, "anime", animeID))
     .then( () => console.log(animeID))
     .catch( error => console.log(error));
@@ -177,3 +158,28 @@ document.body.addEventListener('click', event => {
         document.querySelector('.anime-card-info').remove();
     }
 });
+
+
+
+
+
+
+async function g() {
+    db.collection('anime').where('genre', '==', 'Comedy').then( (snapshot) => {
+        snapshot.docs.forEach( doc => {
+            console.log(doc);
+        } )
+    } );
+
+
+    // const q = query(collection(db, "anime"), where("genre", "==", 'Comedy'));
+    // const querySnapshot = await getDocs(q);
+
+    // querySnapshot.forEach((doc) => {
+    //     // doc.data() is never undefined for query doc snapshots
+    //     console.log(doc.id, " => ", doc.data());
+    //     console.log('aici');
+    // });
+}
+
+g();
