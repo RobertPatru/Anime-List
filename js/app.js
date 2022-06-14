@@ -43,14 +43,18 @@ async function displayAnime(animeList) {
         animeContainer.innerHTML = `
             <img src="${animeList[i].image}" alt="anime picture" class="anime-img">
             <div class="title-and-chevron-container display-flex align-items-center">
-                <p class="anime-title show-info">${animeList[i].name}</p>
-            
+                <p class="anime-title show-info details-button">${animeList[i].name}</p>
+                <input type="hidden" value="${i}" class="index">
             </div>   
         `;
 
+        animeContainer.querySelector('.details-button').addEventListener("click", (event) => {
+            openDetails(animeContainer.querySelector('.index').value);
+        })
         // console.log(animeList[i].id);
         document.querySelector('.anime-list').append(animeContainer);
     }
+    
 }
 
 // get data from firestore activates every time the DOM fnishes loading with all the dependencies
@@ -166,34 +170,32 @@ function updateList(animeArray) {
 }
 
 // ---------------------------------------        Open the details page when an anime is clicked       ---------------------------------------
-function openDetails(name) {
-    for (let i = 1; i < anime.length; i++) {
-        if(anime[i].name == name) {
-            const detailsContainer = document.createElement('div');
-            detailsContainer.classList.add('anime-card-info');
-            detailsContainer.innerHTML = `
-                <img src="${anime[i].image}" alt="big anime img" class="big-anime-img">
-                <h5 class="increase-font margin-Y-10 anime-name">Name: ${anime[i].name}</h5 class="increase-font">
-                <h5 class="increase-font margin-Y-10">Genre: ${anime[i].genre}</h5>
-                <h5 class="increase-font margin-Y-10">Episodes: ${anime[i].episodes}</h5>
-                <p class="increase-font margin-Y-10">
-                    ${anime[i].description}
-                </p>
-                <button class="delete-anime">Delete Anime</button>
-                <span class="close">X</span>
-                <span class="anime-firestore-id display-none">${anime[i].id}<span>
-            `;
+function openDetails(i) {
 
-            document.querySelector('main').append(detailsContainer);
-        }
-    }
+    const detailsContainer = document.createElement('div');
+    detailsContainer.classList.add('anime-card-info');
+    detailsContainer.innerHTML = `
+        <img src="${anime[i].image}" alt="big anime img" class="big-anime-img">
+        <h5 class="increase-font margin-Y-10 anime-name">Name: ${anime[i].name}</h5 class="increase-font">
+        <h5 class="increase-font margin-Y-10">Genre: ${anime[i].genre}</h5>
+        <h5 class="increase-font margin-Y-10">Episodes: ${anime[i].episodes}</h5>
+        <p class="increase-font margin-Y-10">
+            ${anime[i].description}
+        </p>
+        <button class="delete-anime">Delete Anime</button>
+        <span class="close">X</span>
+        <span class="anime-firestore-id display-none">${anime[i].id}<span>
+    `;
+
+    document.querySelector('main').append(detailsContainer);
 }
 
-document.body.addEventListener('click', event => {
-    if (event.target.classList.contains('show-info')) {
-        openDetails(event.target.textContent);
-    }
-});
+// document.body.addEventListener('click', event => {
+//     if (event.target.classList.contains('show-info')) {
+//         openDetails(event.target.textContent);
+//     }
+// });
+
 
 
 
