@@ -82,17 +82,12 @@ async function deleteAnime(animeID) {
 // ---------------------------------------        Delete anime from Firestore       ---------------------------------------
 async function deleteElementFromFirestore(animeID) {
     animeID = animeID.toString();
-    let a = await doc(db, "anime", animeID);
-    console.log(a);
-    let result = await deleteDoc(doc(db, "anime", animeID));
-
-    console.log(result);
-  
 
 
 
-    // await deleteDoc(docRef)
-    //     .then( () => console.log(typeof(animeID)) );
+    await deleteDoc(doc(db, "anime", animeID));
+    console.log(await deleteDoc(doc(db, "anime", animeID)));
+    console.log(animeID);
 }
 
 document.body.addEventListener('click', event => {
