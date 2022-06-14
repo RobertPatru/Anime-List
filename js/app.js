@@ -63,9 +63,12 @@ window.addEventListener('load', () => {
     getDataFromFireStore();
 });
 
+function removeAllAnimeFromFrontend() {
+    document.querySelector('.anime-list').innerHTML = '';
+}
 
 
-
+// ---------------------------------------        DELETE FUNCTIONS       ---------------------------------------
 // ---------------------------------------        Delete anime from Frontend       ---------------------------------------
 async function deleteAnime(animeID) {
       // delete the anime from Firestore
@@ -74,8 +77,7 @@ async function deleteAnime(animeID) {
       // close the anime information 
       document.querySelector('.anime-card-info').remove();
 
-      // reload the page so the list refreshes
-      // location.reload();
+      updateList(anime);
 }
 
 // ---------------------------------------        Delete anime from Firestore       ---------------------------------------
@@ -97,27 +99,74 @@ document.body.addEventListener('click', event => {
        // select the anime's ID (the id is redered in the DOM, but with display none)
        const animeID= event.target.nextSibling.nextSibling.nextSibling.nextSibling.textContent;
 
-       console.log(animeID);
        deleteAnime(animeID);
     }
 });
 
 
+// ---------------------------------------        SEARCH FOR ANIME      ---------------------------------------
+// ---------------------------------------        Display the anime that match the selected "genre"       ---------------------------------------
+const genreInput = document.querySelector('.genre-dropdown-menu');
+genreInput.addEventListener('change', searchAnimeGenre);
 
+function searchAnimeGenre() {
+    searchForAnimeNameInput.value = '';
 
-// ---------------------------------------        Search for anime      ---------------------------------------
-function search(whatToSearchFor) {
-    // how to search through firestore
-    // const q = query(collectionReference, where('name', '==', whatToSearchFor));
+    if (genreInput.value == 'All') {
+        removeAllAnimeFromFrontend();
+        displayAnime(anime);
+        return; // if the filter is set on "All" don't execute the code after this line
+    }
+    
+    // "displayAnime function starts from i = 1. That's why matchingAnime[0] equals '' ";
+    let matchingAnime = [''];
 
-    console.log(anime.includes(toString(whatToSearchFor)));
+    for (let i = 1; i < anime.length; i++) {      
+        if (anime[i].genre != undefined) {
+            if (anime[i].genre.includes(genreInput.value)) {
+                matchingAnime.push(anime[i]);
+            }
+        }
+    }
+
+    updateList(matchingAnime)
 }
 
-document.querySelector('.search-for-anime').addEventListener('keyup', (event) => {
-    const whatToSearchFor = event.target.value;
-    search(whatToSearchFor);
-});
+// ---------------------------------------        Display the anime that match the name       ---------------------------------------
+const searchForAnimeNameInput = document.querySelector('.search-for-anime');
 
+function searchAnimeName() {
+    genreInput.value = 'All';
+
+    let nameToSearchFor = new RegExp(searchForAnimeNameInput.value);
+    let matchingAnime = [''];
+    if (nameToSearchFor.value == '') {
+        console.log('gol');
+    }
+
+    for (let i = 1; i < anime.length; i++) {
+       if(nameToSearchFor.test(anime[i].name.toLowerCase())) {
+            matchingAnime.push(anime[i]);
+       }
+    }
+
+    updateList(matchingAnime);
+}
+
+searchForAnimeNameInput.addEventListener('keyup', searchAnimeName);
+
+// ---------------------------------------        Update the anime list based on the needs       ---------------------------------------
+function updateList(animeArray) {
+    removeAllAnimeFromFrontend();
+
+    if(animeArray == '') {
+        document.querySelector('.anime-list').innerHTML =  `
+            <h1 class='no-anime-found'>No anime found.</h1>
+        `;
+    }
+
+    displayAnime(animeArray);
+}
 
 // ---------------------------------------        Open the details page when an anime is clicked       ---------------------------------------
 function openDetails(name) {
@@ -158,28 +207,3 @@ document.body.addEventListener('click', event => {
         document.querySelector('.anime-card-info').remove();
     }
 });
-
-
-
-
-
-
-async function g() {
-    db.collection('anime').where('genre', '==', 'Comedy').then( (snapshot) => {
-        snapshot.docs.forEach( doc => {
-            console.log(doc);
-        } )
-    } );
-
-
-    // const q = query(collection(db, "anime"), where("genre", "==", 'Comedy'));
-    // const querySnapshot = await getDocs(q);
-
-    // querySnapshot.forEach((doc) => {
-    //     // doc.data() is never undefined for query doc snapshots
-    //     console.log(doc.id, " => ", doc.data());
-    //     console.log('aici');
-    // });
-}
-
-g();
