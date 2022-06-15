@@ -21,7 +21,10 @@ const collectionReference = collection(db, 'anime');
 
 let anime = [];
 
+// this animeID will be tranfered to edit anime page
+let animeIDtoExport = '';
 
+export { animeIDtoExport }
 
 
 // ---------------------------------------        GET DATA FROM FIRESTORE       ---------------------------------------
@@ -83,8 +86,6 @@ async function deleteAnime(animeID) {
 async function deleteElementFromFirestore(animeID) {
     animeID = animeID.toString();
 
-
-
     await deleteDoc(doc(db, "anime", animeID));
     console.log(await deleteDoc(doc(db, "anime", animeID)));
     console.log(animeID);
@@ -93,12 +94,25 @@ async function deleteElementFromFirestore(animeID) {
 document.body.addEventListener('click', event => {
     if (event.target.classList.contains('delete-anime')) {
        // select the anime's ID (the id is redered in the DOM, but with display none)
-       const animeID= event.target.nextSibling.nextSibling.nextSibling.nextSibling.textContent;
+       const animeID= event.target.parentElement.nextSibling.nextSibling.nextSibling.nextSibling.textContent;
 
        deleteAnime(animeID);
     }
 });
 
+// ---------------------------------------        DELETE FUNCTIONS       ---------------------------------------
+function exportAnimeIDandName(id) {
+    animeIDtoExport = toString(id);
+}
+
+document.body.addEventListener('click', event => {
+    if (event.target.classList.contains('edit-anime')) {
+       // select the anime's ID (the id is redered in the DOM, but with display none)
+       animeID= event.target.parentElement.nextSibling.nextSibling.nextSibling.nextSibling.textContent
+
+       exportAnimeIDandName(animeIDtoExport);
+    }
+});
 
 // ---------------------------------------        SEARCH FOR ANIME      ---------------------------------------
 // ---------------------------------------        Display the anime that match the selected "genre"       ---------------------------------------
@@ -177,7 +191,10 @@ function openDetails(i) {
         <p class="increase-font margin-Y-10">
             ${anime[i].description}
         </p>
-        <button class="delete-anime">Delete Anime</button>
+        <div class="display-flex justify-content-space-between">
+            <button class="delete-anime">Delete Anime</button>
+            <button class="edit-anime"><a href="./pages/edit_anime.html" class="text-color-black">Edit Anime</a></button>
+        </div>
         <span class="close">X</span>
         <span class="anime-firestore-id display-none">${anime[i].id}<span>
     `;

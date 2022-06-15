@@ -46,8 +46,21 @@
     margin: 10px 0;
 }
 
+.margin-Y-30-10 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
 .increase-font {
     font-size: 20px;
+}
+
+.text-color-black {
+    color: black;
+}
+
+.text-color-fff {
+    color: #fff;
 }
 
 
@@ -215,7 +228,8 @@ label {
     font-weight: bold;
 }
 
-.delete-anime { 
+.delete-anime,
+.edit-anime { 
     font-weight: 600;
     font-size: 20px;
 }
