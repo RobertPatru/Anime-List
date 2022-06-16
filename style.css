@@ -95,12 +95,12 @@ a {
 
 /* --------------------------- NAV MENU */
 header {
-    background-color: red;
+    background-color: black;
+
     width: 100vw;
 }
 
 nav {
-    background-color: black;
     padding: 0 20px;
 }
 .genre-dropdown-menu {
@@ -271,7 +271,7 @@ label {
 input,
 textarea {
     /* background-color: var(--input-background-color); */
-    color: var(--text-color);
+    /* color: var(--text-color); */
     border: 2px var(--text-color) solid;
     padding: 10px;
     border-radius: 2px;
@@ -313,6 +313,17 @@ textarea:focus {
   }
 
 @media only screen and (min-width: 900px) {
+    header {
+        display: flex;
+        justify-content: center;
+    }
+    
+    nav {
+        /* padding: calc(5%); */
+        width: 90%;
+        padding: 0;
+    }
+
     .anime-card-info {
         top: 5%;
         left: calc(50% - 450px);
