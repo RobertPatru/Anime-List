@@ -148,11 +148,11 @@ searchForAnimeNameInput.addEventListener('keyup', searchAnimeName);
 document.body.addEventListener('click', event => {
     if (event.target.classList.contains('edit-anime')) {
       
-       let animeName = document.querySelector('.anime-name').textContent;
+       let animeName = document.querySelector('.anime-name').textContent.slice(6);
        let animeID = document.querySelector('.anime-ID-firestore').value;
 
        document.querySelector('.anime-card-info').innerHTML = `
-            <h1 class="text-color-fff margin-Y-30">Edit ${animeName}</h1>
+            <h1 class="text-color-fff margin-Y-30">${animeName}</h1>
             <form class="form-to-edit-anime edit-form">
                 <label for="name" class="anime-name-label">Anime Name</label>
                 <input type="text" name="anime name" class="anime-name-input">
@@ -173,6 +173,9 @@ document.body.addEventListener('click', event => {
                 <span class="close">X</span>
             </form>
        `;
+
+       // I don't let the anime container to become grid
+       document.querySelector('.anime-card-info').style.display = 'block';
 
        document.querySelector('.form-to-edit-anime').addEventListener('submit', event => { 
             let name = document.querySelector('.anime-name-input').value;
@@ -226,10 +229,10 @@ function openDetails(i) {
     detailsContainer.classList.add('anime-card-info');
     detailsContainer.innerHTML = `
         <img src="${anime[i].image}" alt="big anime img" class="big-anime-img">
-        <h5 class="increase-font margin-Y-10 anime-name">Name: ${anime[i].name}</h5 class="increase-font">
-        <h5 class="increase-font margin-Y-10">Genre: ${anime[i].genre}</h5>
-        <h5 class="increase-font margin-Y-10">Episodes: ${anime[i].episodes}</h5>
-        <p class="margin-Y-10">
+        <h5 class="increase-font margin-Y-10 anime-name">${anime[i].name}</h5 class="increase-font">
+        <h5 class="increase-font margin-Y-10 genre">Genre: ${anime[i].genre}</h5>
+        <h5 class="increase-font margin-Y-10 episode">Episodes: ${anime[i].episodes}</h5>
+        <p class="margin-Y-10 description">
             ${anime[i].description}
         </p>
         <div class="display-flex justify-content-space-between buttons-container">
