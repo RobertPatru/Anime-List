@@ -2,7 +2,7 @@
 // import { response } from 'express';
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
 // import all firestore specific stuff here
-import { getFirestore, getDocs, addDoc, collection, where, doc, setDoc, deleteDoc, onSnapshot, query} from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
+import { getFirestore, collection, doc, deleteDoc, onSnapshot, updateDoc} from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
 
 
 const firebaseConfig = {
@@ -21,13 +21,7 @@ const collectionReference = collection(db, 'anime');
 
 let anime = [];
 
-// this animeID will be tranfered to edit anime page
-let animeIDtoExport = '';
-
-export { animeIDtoExport }
-
-
-// ---------------------------------------        GET DATA FROM FIRESTORE       ---------------------------------------
+// ---------------------------------------   ---------------------------------------     GET DATA FROM FIRESTORE       ---------------------------------------
 function getDataFromFireStore() {
     onSnapshot(collectionReference, (snapshot) => {
         snapshot.docs.map(element => {   
@@ -37,7 +31,7 @@ function getDataFromFireStore() {
     });
 }
 
-// ---------------------------------------        DISPLAY DATA FROM FIRESTORE IN FRONTEND      ---------------------------------------
+// ---------------------------------------     ---------------------------------------   DISPLAY DATA FROM FIRESTORE IN FRONTEND      ---------------------------------------
 async function displayAnime(animeList) {
     
     for (let i = 1; i < animeList.length; i++) {
@@ -54,7 +48,7 @@ async function displayAnime(animeList) {
         animeContainer.querySelector('.details-button').addEventListener("click", (event) => {
             openDetails(animeContainer.querySelector('.index').value);
         })
-        // console.log(animeList[i].id);
+ 
         document.querySelector('.anime-list').append(animeContainer);
     }
     
@@ -65,57 +59,43 @@ window.addEventListener('load', () => {
     getDataFromFireStore();
 });
 
+// ---------------------------------------    ---------------------------------------   REMOVE ALL ANIME FROM FRONTEND       ------------------------------------------------------------------------------
 function removeAllAnimeFromFrontend() {
     document.querySelector('.anime-list').innerHTML = '';
 }
 
 
-// ---------------------------------------        DELETE FUNCTIONS       ---------------------------------------
-// ---------------------------------------        Delete anime from Frontend       ---------------------------------------
+// ---------------------------------------    ---------------------------------------   DELETE FUNCTIONS       ------------------------------------------------------------------------------
+//         Delete anime from FRONTEND       ---------------------------------------
 async function deleteAnime(animeID) {
-      // delete the anime from Firestore
-      deleteElementFromFirestore(animeID);
+    // delete the anime from Firestore
+    await deleteElementFromFirestore(animeID);
 
-      // close the anime information 
-      document.querySelector('.anime-card-info').remove();
+    // close the anime information 
+    document.querySelector('.anime-card-info').remove();
 
-      updateList(anime);
+    location.reload();
 }
 
-// ---------------------------------------        Delete anime from Firestore       ---------------------------------------
+//         Delete anime from FIRESTORE       ---------------------------------------
 async function deleteElementFromFirestore(animeID) {
     animeID = animeID.toString();
 
     await deleteDoc(doc(db, "anime", animeID));
-    console.log(await deleteDoc(doc(db, "anime", animeID)));
-    console.log(animeID);
+    console.log('delete from firesotre')
 }
 
 document.body.addEventListener('click', event => {
     if (event.target.classList.contains('delete-anime')) {
-       // select the anime's ID (the id is redered in the DOM, but with display none)
-       const animeID= event.target.parentElement.nextSibling.nextSibling.nextSibling.nextSibling.textContent;
 
+       // select the anime's ID (the id is redered in the DOM, but with display hidden)
+       const animeID= document.querySelector('.anime-ID-firestore').value;
        deleteAnime(animeID);
     }
 });
 
-// ---------------------------------------        DELETE FUNCTIONS       ---------------------------------------
-function exportAnimeIDandName(id) {
-    animeIDtoExport = toString(id);
-}
-
-document.body.addEventListener('click', event => {
-    if (event.target.classList.contains('edit-anime')) {
-       // select the anime's ID (the id is redered in the DOM, but with display none)
-       animeID= event.target.parentElement.nextSibling.nextSibling.nextSibling.nextSibling.textContent
-
-       exportAnimeIDandName(animeIDtoExport);
-    }
-});
-
-// ---------------------------------------        SEARCH FOR ANIME      ---------------------------------------
-// ---------------------------------------        Display the anime that match the selected "genre"       ---------------------------------------
+// ---------------------------------------    ---------------------------------------    SEARCH FOR ANIME      ------------------------------------------------------------------------------
+//         Display the anime that match the selected "GENRE"       ---------------------------------------
 const genreInput = document.querySelector('.genre-dropdown-menu');
 genreInput.addEventListener('change', searchAnimeGenre);
 
@@ -142,17 +122,15 @@ function searchAnimeGenre() {
     updateList(matchingAnime)
 }
 
-// ---------------------------------------        Display the anime that match the name       ---------------------------------------
+//         Display the anime that match the NAME       ---------------------------------------
 const searchForAnimeNameInput = document.querySelector('.search-for-anime');
 
 function searchAnimeName() {
     genreInput.value = 'All';
 
-    let nameToSearchFor = new RegExp(searchForAnimeNameInput.value);
+    let nameToSearchFor = new RegExp(searchForAnimeNameInput.value.toLowerCase());
     let matchingAnime = [''];
-    if (nameToSearchFor.value == '') {
-        console.log('gol');
-    }
+
 
     for (let i = 1; i < anime.length; i++) {
        if(nameToSearchFor.test(anime[i].name.toLowerCase())) {
@@ -165,7 +143,70 @@ function searchAnimeName() {
 
 searchForAnimeNameInput.addEventListener('keyup', searchAnimeName);
 
-// ---------------------------------------        Update the anime list based on the needs       ---------------------------------------
+
+// ---------------------------------------   ---------------------------------------     UPDATE (EDIT) ANIME       ---------------------------------------
+document.body.addEventListener('click', event => {
+    if (event.target.classList.contains('edit-anime')) {
+      
+       let animeName = document.querySelector('.anime-name').textContent;
+       let animeID = document.querySelector('.anime-ID-firestore').value;
+
+       document.querySelector('.anime-card-info').innerHTML = `
+            <h1 class="text-color-fff margin-Y-30">Edit ${animeName}</h1>
+            <form class="form-to-edit-anime edit-form">
+                <label for="name" class="anime-name-label">Anime Name</label>
+                <input type="text" name="anime name" class="anime-name-input">
+
+                <label for="anime genre" class="anime-genre-label">Anime Genre</label>
+                <input type="text" name="anime gendre" class="anime-genre-input">
+
+                <label for="number of episodes" class="anime-episodes-label">Episodes</label>
+                <input type="number" name="episodes" class="anime-episodes-input">
+                
+                <label for="anime image" lass="upload-anime-image-label">Anime Image URL</label>
+                <input type="text" name="upload anime image" class="upload-anime-image-input">
+
+                <label for="anime description" class="anime-description-label">Anime Description</label>
+                <textarea name="anime description" form="add anime" class="anime-description-input"></textarea>
+
+                <input class="submit-btn update-anime" type="submit" value="UPDATE">
+                <span class="close">X</span>
+            </form>
+       `;
+
+       document.querySelector('.form-to-edit-anime').addEventListener('submit', event => { 
+            let name = document.querySelector('.anime-name-input').value;
+            let genre = document.querySelector('.anime-genre-input').value;
+            let episodes = document.querySelector('.anime-episodes-input').value;
+            let imgURL = document.querySelector('.upload-anime-image-input').value;
+            let description = document.querySelector('.anime-description-input').value;
+            
+            if (name != '' && genre != '' && episodes != '' && imgURL != '' && description) {
+                updateAnimeInFirestore(animeID, name, genre, episodes, imgURL, description);
+            }
+        
+        
+            document.querySelector('.anime-name-input').value = '';
+            document.querySelector('.anime-genre-input').value = '';
+            document.querySelector('.anime-episodes-input').value = '';
+            document.querySelector('.upload-anime-image-input').value = '';
+            document.querySelector('.anime-description-input').value = '';
+       });
+    }
+});
+
+async function updateAnimeInFirestore(animeID, name, genre, episodes, imgURL, description) {
+    await updateDoc(doc(db, "anime", animeID), {
+        name: name,
+        genre: genre,
+        episodes: episodes,
+        image: imgURL,
+        description: description
+    });
+    location.reload();
+}
+
+// ---------------------------------------     ---------------------------------------   Update the anime list based on the needs       ---------------------------------------
 function updateList(animeArray) {
     removeAllAnimeFromFrontend();
 
@@ -178,7 +219,7 @@ function updateList(animeArray) {
     displayAnime(animeArray);
 }
 
-// ---------------------------------------        Open the details page when an anime is clicked       ---------------------------------------
+// ---------------------------------------    ---------------------------------------    Open the details page when an anime is clicked       ---------------------------------------
 function openDetails(i) {
 
     const detailsContainer = document.createElement('div');
@@ -193,26 +234,16 @@ function openDetails(i) {
         </p>
         <div class="display-flex justify-content-space-between">
             <button class="delete-anime">Delete Anime</button>
-            <button class="edit-anime"><a href="./pages/edit_anime.html" class="text-color-black">Edit Anime</a></button>
+            <button><a href="#" class="text-color-black edit-anime">Edit Anime</a></button>
         </div>
         <span class="close">X</span>
-        <span class="anime-firestore-id display-none">${anime[i].id}<span>
+        <input type="hidden" value="${anime[i].id}" class="anime-ID-firestore">
     `;
 
     document.querySelector('main').append(detailsContainer);
 }
 
-// document.body.addEventListener('click', event => {
-//     if (event.target.classList.contains('show-info')) {
-//         openDetails(event.target.textContent);
-//     }
-// });
-
-
-
-
-
-// ---------------------------------------        Close the details page when "X" is clicked       ---------------------------------------
+// ---------------------------------------    ---------------------------------------    Close the details page when "X" is clicked       ---------------------------------------
 document.body.addEventListener('click', event => {
     if (event.target.classList.contains('close')) {
         document.querySelector('.anime-card-info').remove();
