@@ -4,7 +4,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebas
 // import all firestore specific stuff here
 import { getFirestore, getDocs, addDoc, collection, where, doc, setDoc, deleteDoc, onSnapshot, query} from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
 
-import { animeIDtoExport } from './app.js';
+import { animeIDtoExport } from '../js/app.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDkpMv8qx2ytXBeyOkWHahWTmpa7aaqXME",
