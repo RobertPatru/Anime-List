@@ -117,6 +117,7 @@ nav {
     font-weight: bold;
     color: white;
     text-transform: uppercase;
+    text-align: end;
 }
 
 /* --------------------------- CONTENT SECTION */
@@ -189,8 +190,10 @@ nav {
     margin: 10px 0;
 }
 
+/* this is anime description */
 .anime-card-info p {
     margin-top: 20px;
+    font-size: 18px;
 }
 
 .close {
@@ -205,7 +208,25 @@ nav {
     transform: scale(1.1);
 }
 
+.buttons-container {
+    margin-top: 20px;
+}
 
+.buttons-container button {
+    padding: 5px 10px;
+    text-transform: uppercase;
+    background-color: var(--input-background-color);
+    outline: none;
+    border: 2px var(--text-color) solid;
+    color: var(--text-color);
+    font-weight: 300;
+    transition: all 0.2s linear;
+}
+
+.buttons-container button:hover {
+    cursor: pointer;
+    background-color: var(--hover-color);
+}
 
 /* ----------------------------------- Add anime list */
 

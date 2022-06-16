@@ -229,12 +229,12 @@ function openDetails(i) {
         <h5 class="increase-font margin-Y-10 anime-name">Name: ${anime[i].name}</h5 class="increase-font">
         <h5 class="increase-font margin-Y-10">Genre: ${anime[i].genre}</h5>
         <h5 class="increase-font margin-Y-10">Episodes: ${anime[i].episodes}</h5>
-        <p class="increase-font margin-Y-10">
+        <p class="margin-Y-10">
             ${anime[i].description}
         </p>
-        <div class="display-flex justify-content-space-between">
-            <button class="delete-anime">Delete Anime</button>
-            <button><a href="#" class="text-color-black edit-anime">Edit Anime</a></button>
+        <div class="display-flex justify-content-space-between buttons-container">
+            <button class="delete-anime">Delete</button>
+            <button class="edit-anime">EDIT ANIME</button>
         </div>
         <span class="close">X</span>
         <input type="hidden" value="${anime[i].id}" class="anime-ID-firestore">
