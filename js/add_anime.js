@@ -31,13 +31,9 @@ document.querySelector('.form-to-add-anime').addEventListener('submit', e => {
     if (name != '' && genre != '' && episodes != '' && imgURL != '' && description) {
         addElements(name, genre, episodes, imgURL, description);
     }
-
-
-    document.querySelector('.anime-name-input').value = '';
-    document.querySelector('.anime-genre-input').value = '';
-    document.querySelector('.anime-episodes-input').value = '';
-    document.querySelector('.upload-anime-image-input').value = '';
-    document.querySelector('.anime-description-input').value = '';
+    else {
+        makeBorderRed();
+    }
 
     e.preventDefault();
 });
@@ -52,7 +48,25 @@ function addElements(name, genre, episodes, imgURL, description) {
         image: imgURL,
         description: description
     })
-        .then( () => {console.log('Element added')} );
+        .then( () => {
+            window.location.href = "/index.html";
+        } );
+}
+
+function makeBorderRed() {
+    document.querySelector('.anime-name-input').style.border = '3px red solid';
+    document.querySelector('.anime-genre-input').style.border = '3px red solid';
+    document.querySelector('.anime-episodes-input').style.border = '3px red solid';
+    document.querySelector('.upload-anime-image-input').style.border = '3px red solid';
+    document.querySelector('.anime-description-input').style.border = '3px red solid';
+
+    setTimeout(() => {
+        document.querySelector('.anime-name-input').style.border = 'none';
+        document.querySelector('.anime-genre-input').style.border = 'none';
+        document.querySelector('.anime-episodes-input').style.border = 'none';
+        document.querySelector('.upload-anime-image-input').style.border = 'none';
+        document.querySelector('.anime-description-input').style.border = 'none';
+    }, 2000);
 }
 
 // // ---------------------------------------        ---------------------------------------       ---------------------------------------
